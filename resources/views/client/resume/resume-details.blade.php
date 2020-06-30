@@ -34,7 +34,7 @@
                     </li>
                     <li>
                         <a class="nav-link" href="#references">
-                            References
+                            References 
                         </a>
                     </li>
                 </ul>
