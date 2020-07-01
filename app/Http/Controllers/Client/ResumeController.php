@@ -43,18 +43,16 @@ class ResumeController extends Controller
                 //store template in session
                 $request->session()->put('template', $template);
 
-                // return resume details page url 
+                // return next page(resume details) page url 
                 return response()->json([
                     'resp' => 1,
                     'message' => 'Template value stored in session',
                     'next_page_url' => route('resume.resume_details')
                 ]);
             } catch (\Exception $e) {
-                //return same page url if any error 
                 return response()->json([
                     'resp' => 0,
                     'message' => $e->getMessage(),
-                    'next_page_url' => route('resume.choose_template')
                 ]);
             }
         }

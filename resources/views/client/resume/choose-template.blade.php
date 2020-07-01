@@ -52,17 +52,17 @@
 
             //collect data for ajax
             let formData = {
+                '_token': "{{csrf_token()}}",
                 template
             };
 
             //perform ajax request to save template value in session
             $.post(formUrl, formData, function(data) {
-                if(typeof data.resp == 'undefined') return;
+                if (typeof data.resp == 'undefined') return;
 
-                if (data.resp) console.log('success');
+                if (data.resp) location.href = data.next_page_url; //redirect to next page
                 else console.log("error");
 
-                location.href = data.next_page_url; //redirect to next page
             }).catch(function(err) {
                 console.log(err);
             })

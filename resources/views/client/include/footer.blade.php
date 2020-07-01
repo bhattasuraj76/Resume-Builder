@@ -26,7 +26,7 @@
         const BASE_URL = "{{ url('/') }}";
         const CSRF_TOKEN = $('input[name="_token"]').val();
         const IS_USER_AUTH = "{{auth()->check()}}";
-        console.log(IS_USER_AUTH);
+        
     </script>
 
     <!-- import scripts form pages -->

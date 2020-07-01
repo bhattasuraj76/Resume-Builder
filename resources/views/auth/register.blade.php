@@ -8,7 +8,7 @@
             <div class="card p-4">
                 <h4 class="card-title mb-4 mt-1 text-center text-info">Sign Up</h4>
                 <p>
-                    <a href="{{ url('/login/gmail') }}" class="btn btn-block btn-outline-info"> <i class="fab fa-twitter"></i>   Signup via Gmail</a>
+                    <a href="{{ url('/login/google') }}" class="btn btn-block btn-outline-info"> <i class="fab fa-twitter"></i>   Signup via Gmail</a>
                     <a href="{{ url('/login/facebook') }}" class="btn btn-block btn-outline-primary"> <i class="fab fa-facebook-f"></i>   Signup via facebook</a>
                 </p>
                 <hr>
