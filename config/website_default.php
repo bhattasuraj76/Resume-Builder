@@ -1,5 +1,4 @@
- <?php
-
-    return [
-        'site_name' => 'Resume Builder'
-    ];
+<?php
+return [
+    'site_name' => 'Resume Builder'
+];

@@ -47,64 +47,66 @@
 
     @section('after-scripts')
     <script>
-        //url to get parsed template view  
-        const formUrl = "{{route('resume.template_parsed_view')}}";
-
-        $('#template').change(function() {
-            let val = $(this).val();
-            //if no template is choose empty template preview and return
-            if (!val) {
-                $('.template-preview').html("");
-                swal({
-                    icon: 'warning',
-                    title: 'Oops',
-                    text: 'Please select a tempalte'
-                });
-                return;
-            }
-
-            const formData = $('#template-form').serialize();
-            //else perform ajax to get parsed view according to template choosen
-            $.get(formUrl, formData, function(data) {
-                if (typeof data.resp == 'undefined') return;
-
-                if (data.resp) {
-                    $('.template-preview').html(data.parsedView);
-                } else {
+        $(document).ready(function() {
+            $('#template').change(function() {
+                let val = $(this).val();
+                //if no template is choose empty template preview and return
+                if (!val) {
+                    $('.template-preview').html("");
                     swal({
                         icon: 'warning',
                         title: 'Oops',
-                        text: data.message
+                        text: 'Please select a tempalte'
                     });
-                };
-            }).catch(function(err) {
-                console.log(err);
+                    return;
+                }
+
+                //url to get parsed template view  
+                let formUrl = "{{route('resume.template_parsed_view')}}";
+                let formData = $('#template-form').serialize();
+                //else perform ajax to get parsed view according to template choosen
+                $.get(formUrl, formData, function(data) {
+                    if (typeof data.resp == 'undefined') return;
+
+                    if (data.resp) {
+                        $('.template-preview').html(data.parsedView);
+                    } else {
+                        swal({
+                            icon: 'warning',
+                            title: 'Oops',
+                            text: data.message
+                        });
+                    };
+                }).catch(function(err) {
+                    console.log(err);
+                })
             })
-        })
 
-        //handle download btn clicks
-        $('.js-download-btn').on('click', function(e) {
-            e.preventDefault();
+            //handle download btn clicks
+            $('.js-download-btn').on('click', function(e) {
+                e.preventDefault();
 
-            let url = $(this).attr('href');
+                let url = $(this).attr('href');
 
-            //inform user to login if user is not authenticated
-            let userStatus = IS_USER_AUTH;
-            if (!userStatus) {
-                swal({
-                    icon: "info",
-                    title: "Sorry",
-                    text: "Please login to download resume"
-                }).then(function() {
-                    location.href = '/login';
-                });
+                //inform user to login if user is not authenticated
+                let userStatus = IS_USER_AUTH;
+                if (!userStatus) {
+                    swal({
+                        icon: "info",
+                        title: "Sorry",
+                        text: "Please login to download resume"
+                    }).then(function() {
+                        location.href = "{{route('login')}}";
+                    });
 
-                return;
-            }
+                    return;
+                }
 
-            //if authenticated unbind click and trigger click
-            $(this).unbind('click');
-            $(this).get(0).click();
+                //if authenticated unbind click and trigger click
+                $(this).unbind('click');
+                $(this).get(0).click();
+            });
         });
     </script>
+
     @endsection

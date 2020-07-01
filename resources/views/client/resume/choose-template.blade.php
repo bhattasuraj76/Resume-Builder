@@ -40,16 +40,15 @@
 
 @section('after-scripts')
 <script>
-    //form url for template data
-    const formUrl = "{{route('resume.choose_template')}}";
-
-    (function($) {
+    $(document).ready(function() {
         $('.js-choose-template').on('click', function(e) {
             e.preventDefault();
             //get template name
             let template = $(this).parents('.template').data('template-name');
             if (!template) return; //return if not defined
 
+            //form url for template data
+            let formUrl = "{{route('resume.choose_template')}}";
             //collect data for ajax
             let formData = {
                 '_token': "{{csrf_token()}}",
@@ -67,6 +66,6 @@
                 console.log(err);
             })
         });
-    })(jQuery);
+    });
 </script>
 @endsection

@@ -28,7 +28,7 @@
     Deny from all
     </Files>
 
-    #PROTECT ENV FILE
+    #PROTECT htaccess FILE
     <Files .htaccess>
     order allow,deny
     Deny from all

@@ -34,7 +34,7 @@
                     </li>
                     <li>
                         <a class="nav-link" href="#references">
-                            References 
+                            References
                         </a>
                     </li>
                 </ul>
@@ -76,98 +76,98 @@
 
 @section('after-scripts')
 <script>
-    //form url for template data
-    const formUrl = "{{route('resume.resume_details')}}";
+    $(document).ready(function() {
+        $('.js-resume-details-btn').on('click', function(e) {
+            e.preventDefault();
+            //form url for template data
+            let formUrl = "{{route('resume.resume_details')}}";
+            let formData = $('#resume-details-form').serialize();
 
-    $('.js-resume-details-btn').on('click', function(e) {
-        e.preventDefault();
-        let formData = $('#resume-details-form').serialize();
+            //perform ajax request to save resume details value in session
+            $.post(formUrl, formData, function(data) {
+                if (typeof data.resp == 'undefined') return;
 
-        //perform ajax request to save resume details value in session
-        $.post(formUrl, formData, function(data) {
-            if (typeof data.resp == 'undefined') return;
+                if (data.resp) console.log('success');
+                else {
+                    if (!$.isEmptyObject(data.errors)) {
+                        let errors = JSON.stringify(Object.values(data.errors)); //stringify all errors
 
-            if (data.resp) console.log('success');
-            else {
-                if (!$.isEmptyObject(data.errors)) {
-                    let errors = JSON.stringify(Object.values(data.errors)); //stringify all errors
+                        swal({
+                            title: 'Validation Error',
+                            text: errors,
+                            icon: "error"
+                        });
+                    }
 
-                    swal({
-                        title: 'Validation Error',
-                        text: errors,
-                        icon: "error"
-                    });
+                    return;
                 }
 
-                return;
+                location.href = data.next_page_url; //redirect to next page
+            }).catch(function(err) {
+                console.log(err);
+            })
+        });
+        //disable end date if cuurent checkbox is true
+        $(document).on('click', '.js-current-studying, .js-current-working', function() {
+            let val = $(this).is(':checked') ? 1 : 0;
+            let $checkbox = $(this).parents('.row').first().find('input[class*="js-calendar"]');
+
+            if (val) $checkbox.val("").attr('disabled', 'disabled');
+            else $checkbox.removeAttr('disabled');
+        });
+
+        // SmartWizard initialize
+        $('#smartwizard').smartWizard({
+            selected: 0,
+            theme: 'arrows',
+            justified: true,
+            autoAdjustHeight: true,
+            cycleSteps: true,
+            backButtonSupport: true,
+            transition: {
+                animation: 'slide-horizontal', // none/fade/slide-horizontal/slide-vertical/slide-swing
+                speed: '1000',
+            },
+            toolbarSettings: {
+                toolbarPosition: 'bottom', // none, top, bottom, both
+                toolbarButtonPosition: 'right', // left, right, center
+                showNextButton: true, // show/hide a Next button
+                showPreviousButton: true, // show/hide a Previous button
+                toolbarExtraButtons: [] // Extra buttons to show on toolbar
+            },
+            anchorSettings: {
+                anchorClickable: true, // Enable/Disable anchor navigation
+                enableAllAnchors: false, // Activates all anchors clickable all times
+                markDoneStep: true, // Add done css
+                markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
+                removeDoneStepOnNavigateBack: false, // While navigate back done step after active step will be cleared
+                enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+            },
+            lang: { // Language variables for button
+                next: 'Next',
+                previous: 'Previous'
+            },
+        });
+
+        //add more skills 
+        $('.js-add-more-skills-btn').on('click', function() {
+            var selector = $(".js-skills").last();
+            var count = $(".js-skills").length;
+            var initialTimer;
+
+            if (initialTimer) {
+                clearTimeout(initialTimer);
             }
 
-            location.href = data.next_page_url; //redirect to next page
-        }).catch(function(err) {
-            console.log(err);
-        })
-    });
-    //disable end date if cuurent checkbox is true
-    $(document).on('click', '.js-current-studying, .js-current-working', function() {
-        let val = $(this).is(':checked') ? 1 : 0;
-        let $checkbox = $(this).parents('.row').first().find('input[class*="js-calendar"]');
+            //hide other items details
+            if (count > 0) {
+                $(".js-skills .js-item-header").each(function() {
+                    hideItemDetail($(this));
+                });
+            }
 
-        if (val) $checkbox.val("").attr('disabled', 'disabled');
-        else $checkbox.removeAttr('disabled');
-    });
-
-    // SmartWizard initialize
-    $('#smartwizard').smartWizard({
-        selected: 0,
-        theme: 'arrows',
-        justified: true,
-        autoAdjustHeight: true,
-        cycleSteps: true,
-        backButtonSupport: true,
-        transition: {
-            animation: 'slide-horizontal', // none/fade/slide-horizontal/slide-vertical/slide-swing
-            speed: '1000',
-        },
-        toolbarSettings: {
-            toolbarPosition: 'bottom', // none, top, bottom, both
-            toolbarButtonPosition: 'right', // left, right, center
-            showNextButton: true, // show/hide a Next button
-            showPreviousButton: true, // show/hide a Previous button
-            toolbarExtraButtons: [] // Extra buttons to show on toolbar
-        },
-        anchorSettings: {
-            anchorClickable: true, // Enable/Disable anchor navigation
-            enableAllAnchors: false, // Activates all anchors clickable all times
-            markDoneStep: true, // Add done css
-            markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-            removeDoneStepOnNavigateBack: false, // While navigate back done step after active step will be cleared
-            enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-        },
-        lang: { // Language variables for button
-            next: 'Next',
-            previous: 'Previous'
-        },
-    });
-
-    //add more skills 
-    $('.js-add-more-skills-btn').on('click', function() {
-        var selector = $(".js-skills").last();
-        var count = $(".js-skills").length;
-        var initialTimer;
-
-        if (initialTimer) {
-            clearTimeout(initialTimer);
-        }
-
-        //hide other items details
-        if (count > 0) {
-            $(".js-skills .js-item-header").each(function() {
-                hideItemDetail($(this));
-            });
-        }
-
-        initialTimer = setTimeout(function() {
-            var html = `
+            initialTimer = setTimeout(function() {
+                var html = `
                             <div class="skills js-skills">
                                 <h4 class="text text-info mb-4 js-item-header">Skill ${count +1} <a href="javascript:void" class="ml-3 js-delete-item text-danger">X</a></h4>
                                 <div class="row">
@@ -196,29 +196,29 @@
                             </div>
                     `;
 
-            $(html).insertAfter(selector);
-        }, 300);
-    });
+                $(html).insertAfter(selector);
+            }, 300);
+        });
 
-    //add more work  
-    $('.js-add-more-work-btn').on('click', function() {
-        var selector = $(".js-work-details").last();
-        var count = $(".js-work-details").length;
-        var initialTimer;
+        //add more work  
+        $('.js-add-more-work-btn').on('click', function() {
+            var selector = $(".js-work-details").last();
+            var count = $(".js-work-details").length;
+            var initialTimer;
 
-        if (initialTimer) {
-            clearTimeout(initialTimer);
-        }
+            if (initialTimer) {
+                clearTimeout(initialTimer);
+            }
 
-        //hide other items details
-        if (count > 0) {
-            $(".js-work-details .js-item-header").each(function() {
-                hideItemDetail($(this));
-            });
-        }
+            //hide other items details
+            if (count > 0) {
+                $(".js-work-details .js-item-header").each(function() {
+                    hideItemDetail($(this));
+                });
+            }
 
-        initialTimer = setTimeout(function() {
-            var html = `
+            initialTimer = setTimeout(function() {
+                var html = `
                             <div class="work-details js-work-details">
                                 <h4 class="text text-info mb-4 js-item-header">Work Experience ${count + 1} <a href="javascript:void" class="ml-3 js-delete-item text-danger">X</a></h4>
                                 <div class="row">
@@ -273,33 +273,33 @@
                     `;
 
 
-            $(html).insertAfter(selector);
+                $(html).insertAfter(selector);
 
-            loadDatepicker();
-        }, 300);
+                loadDatepicker();
+            }, 300);
 
 
-    });
+        });
 
-    //add more education 
-    $('.js-add-more-education-btn').on('click', function() {
-        var selector = $(".js-education").last();
-        var count = $(".js-education").length;
-        var initialTimer;
+        //add more education 
+        $('.js-add-more-education-btn').on('click', function() {
+            var selector = $(".js-education").last();
+            var count = $(".js-education").length;
+            var initialTimer;
 
-        if (initialTimer) {
-            clearTimeout(initialTimer);
-        }
+            if (initialTimer) {
+                clearTimeout(initialTimer);
+            }
 
-        //hide other items details
-        if (count > 0) {
-            $(".js-education .js-item-header").each(function() {
-                hideItemDetail($(this));
-            });
-        }
+            //hide other items details
+            if (count > 0) {
+                $(".js-education .js-item-header").each(function() {
+                    hideItemDetail($(this));
+                });
+            }
 
-        initialTimer = setTimeout(function() {
-            var html = `
+            initialTimer = setTimeout(function() {
+                var html = `
                             <div class="education js-education">
                                 <h4 class="text text-info mb-4 js-item-header">Degree ${count +1} <a href="javascript:void" class="ml-3 js-delete-item text-danger">X</a></h4>
                                 <div class="row">
@@ -362,33 +362,33 @@
                             </div>
                     `;
 
-            $(html).insertAfter(selector);
+                $(html).insertAfter(selector);
 
-            loadDatepicker();
-        }, 300);
+                loadDatepicker();
+            }, 300);
 
 
-    });
+        });
 
-    //add more reference 
-    $('.js-add-more-reference-btn').on('click', function() {
-        var selector = $(".js-references").last();
-        var count = $(".js-references").length;
-        var initialTimer;
+        //add more reference 
+        $('.js-add-more-reference-btn').on('click', function() {
+            var selector = $(".js-references").last();
+            var count = $(".js-references").length;
+            var initialTimer;
 
-        if (initialTimer) {
-            clearTimeout(initialTimer);
-        }
+            if (initialTimer) {
+                clearTimeout(initialTimer);
+            }
 
-        //hide other items details
-        if (count > 0) {
-            $(".js-references .js-item-header").each(function() {
-                hideItemDetail($(this));
-            });
-        }
+            //hide other items details
+            if (count > 0) {
+                $(".js-references .js-item-header").each(function() {
+                    hideItemDetail($(this));
+                });
+            }
 
-        initialTimer = setTimeout(function() {
-            var html = `
+            initialTimer = setTimeout(function() {
+                var html = `
                             <div class="references js-references">
                                 <h4 class="text text-info mb-4 js-item-header">Reference ${count +1} <a href="javascript:void" class="ml-3 js-delete-item text-danger">X</a></h4>
 
@@ -404,19 +404,20 @@
                             </div>
                     `;
 
-            $(html).insertAfter(selector);
-        }, 300);
-    });
+                $(html).insertAfter(selector);
+            }, 300);
+        });
 
-    //delete added item
-    $(document).on('click', '.js-delete-item', function(e) {
-        e.stopPropagation();
-        $(this).parent().parent().remove();
-    });
+        //delete added item
+        $(document).on('click', '.js-delete-item', function(e) {
+            e.stopPropagation();
+            $(this).parent().parent().remove();
+        });
 
-    //toggle item on header click
-    $(document).on('click', '.js-item-header', function() {
-        toggleItemDetail($(this));
+        //toggle item on header click
+        $(document).on('click', '.js-item-header', function() {
+            toggleItemDetail($(this));
+        });
     });
 
     //toggle Item Details
