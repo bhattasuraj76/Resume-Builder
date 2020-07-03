@@ -90,12 +90,16 @@
                 if (data.resp) console.log('success');
                 else {
                     if (!$.isEmptyObject(data.errors)) {
-                        let errors = JSON.stringify(Object.values(data.errors)); //stringify all errors
+                        let messages = [];
+                        Object.values(data.errors).forEach((item, index) => messages.push(item[0]+ "\n"));
+                        console.log(messages);
+                        let errors = JSON.stringify(); //stringify all errors
 
                         swal({
                             title: 'Validation Error',
-                            text: errors,
-                            icon: "error"
+                            text: messages.join(''),
+                            icon: "error",
+                            html: true
                         });
                     }
 
