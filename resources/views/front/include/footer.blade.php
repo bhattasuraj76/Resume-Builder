@@ -25,7 +25,15 @@
         //global variables
         const BASE_URL = "{{ url('/') }}";
         const CSRF_TOKEN = $('input[name="_token"]').val();
-        
+
+
+        $(window).on('load', function(e) {
+            if (window.location.hash == '#_=_') {
+                window.location.hash = ''; // for older browsers, leaves a # behind
+                history.pushState('', document.title, window.location.pathname); // nice and clean
+                e.preventDefault(); // no page reload
+            }
+        })
     </script>
 
     <!-- import scripts form pages -->
