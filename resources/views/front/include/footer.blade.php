@@ -12,7 +12,7 @@
     <script src="{{asset('public/vendor/jquery-smart-wizard/js/jquery.smartWizard.js')}}"></script>
     <script src="{{asset('public/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('public/vendor/sweetalert/sweetalert.min.js')}}"></script>
-    <script src="{{asset('public/client/js/main.js')}}"></script>
+    <script src="{{asset('public/front/js/main.js')}}"></script>
 
     <script>
         //attaching token to all ajax request
@@ -25,7 +25,7 @@
         //global variables
         const BASE_URL = "{{ url('/') }}";
         const CSRF_TOKEN = $('input[name="_token"]').val();
-        const IS_USER_AUTH = "{{auth()->check()}}";
+        const IS_USER_AUTH = "{{auth()->check() ? 1 : 0}}";
         
     </script>
 

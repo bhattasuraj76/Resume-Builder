@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\BasicInfo;
@@ -21,7 +21,7 @@ class ResumeController extends Controller
         $this->educationModel = new Education();
         $this->skillModel = new Skill();
         $this->referenceModel = new Reference();
-        $this->pagePath = 'client.resume';
+        $this->pagePath = 'front.resume';
         $this->pageTitle = 'Build resume';
     }
 
@@ -68,7 +68,7 @@ class ResumeController extends Controller
 
             //show resume details page 
             $data['pageTitle'] = $this->pageTitle;
-            $data['countries'] = json_decode(file_get_contents(storage_path('json/countries.json', true)));
+            $data['countries'] = json_decode(file_get_contents(storage_path('json/countries.json')), true);
             $data['skills_levels'] = config('resume.skills_level');
 
             return view($this->pagePath . '.resume-details', $data);
@@ -179,7 +179,7 @@ class ResumeController extends Controller
         try {
             //store resume data in database before donwloading resume
             $user = Auth::user();
-            $this->insertResumeDetails($resumeDetails, $user); //insert resume details
+            // $this->insertResumeDetails($resumeDetails, $user); //insert resume details
 
             $type = $request->type ? $request->type : 'pdf';
             if ($type == 'word')  return $this->downloadWord($template, $resumeDetails);
@@ -228,12 +228,15 @@ class ResumeController extends Controller
     {
         $data = [
             'first_name' => $resumeData['first_name'],
-            'last_name'  => $resumeData['first_name'],
-            'email' => $resumeData['first_name'],
-            'phone' => $resumeData['first_name'], 'street' => $resumeData['first_name'],
-            'city' => $resumeData['first_name'],
-            'postal_code' => $resumeData['first_name'],
-            'country' => $resumeData['first_name'],
+            'last_name'  => $resumeData['last_name'],
+            'email' => $resumeData['email'],
+            'phone' => $resumeData['phone'],
+            'postal_code' => $resumeData['postal_code'],
+            'street' => $resumeData['street'],
+            'city' => $resumeData['city'],
+            'country' => $resumeData['country'],
+            'profession_title' => $resumeData['professsion_title'],
+            'profession_summary' => $resumeData['profession_summary'],
             'user_id' => $user->id
         ];
 

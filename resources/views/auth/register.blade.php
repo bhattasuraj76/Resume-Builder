@@ -1,4 +1,4 @@
-@extends('client.layouts.master')
+@extends('front.layouts.master')
 @section('registerPage', 'active')
 
 @section('content')

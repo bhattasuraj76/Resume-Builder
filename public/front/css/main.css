@@ -1,4 +1,4 @@
-.welcome-msg-wrapper{
+.welcome-msg-wrapper {
     background-color: #e9ecef;
     padding: 50px 20px;
     height: calc(100vh - 56px);
@@ -65,21 +65,22 @@
     visibility: visible;
 }
 
-    .section-break {
-        margin: 48px 0px;
-        border-color: #aaa;
-    }
+.section-break {
+    margin: 48px 0px;
+    border-color: #aaa;
+}
 
-    .js-item-header {
-        padding: 10px 5px;
-        border-bottom: 1px solid #399AF2;
-    }
+.js-item-header {
+    padding: 10px 5px;
+    border-bottom: 1px solid #399AF2;
+}
 
-    .js-item-header:hover {
-        cursor: pointer;
-        transition: all 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    }
+.js-item-header:hover {
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
 
-    .border-item {
-        border: 1px solid #aaa;
-    }
+.border-item {
+    border: 1px solid #aaa;
+}
+

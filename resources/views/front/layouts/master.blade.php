@@ -1,6 +1,6 @@
-@include('client.include.header')
-@include('client.include.navbar')
-@include('client.include.footer')
+@include('front.include.header')
+@include('front.include.navbar')
+@include('front.include.footer')
 
 @yield('header')
 <div class="app">

@@ -1,4 +1,4 @@
-@extends('client.layouts.master')
+@extends('front.layouts.master')
 @section('title', $pageTitle)
 @section('content')
 
@@ -15,6 +15,11 @@
                     <li>
                         <a class="nav-link" href="#basic-info">
                             Basic Info
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#profession">
+                            Profession
                         </a>
                     </li>
                     <li>
@@ -41,20 +46,22 @@
 
                 <div class="tab-content p-4 mb-1">
                     <div id="basic-info" class="tab-pane" role="tabpanel">
-                        @include('client.resume.partials._basic-info')
+                        @include('front.resume.partials._basic-info')
+                    </div>
+                    <div id="profession" class="tab-pane" role="tabpanel">
+                        @include('front.resume.partials._profession')
                     </div>
                     <div id="skills" class="tab-pane" role="tabpanel">
-                        @include('client.resume.partials._skills')
+                        @include('front.resume.partials._skills')
                     </div>
                     <div id="work-details" class="tab-pane" role="tabpanel">
-                        @include('client.resume.partials._work-details')
+                        @include('front.resume.partials._work-details')
                     </div>
-
                     <div id="education" class="tab-pane" role="tabpanel">
-                        @include('client.resume.partials._education')
+                        @include('front.resume.partials._education')
                     </div>
                     <div id="references" class="tab-pane" role="tabpanel">
-                        @include('client.resume.partials._references')
+                        @include('front.resume.partials._references')
                         <button class="btn btn-lg btn-outline-success js-resume-details-btn mx-auto d-block">Build Resume</button>
                     </div>
                 </div>
@@ -91,7 +98,7 @@
                 else {
                     if (!$.isEmptyObject(data.errors)) {
                         let messages = [];
-                        Object.values(data.errors).forEach((item, index) => messages.push(item[0]+ "\n"));
+                        Object.values(data.errors).forEach((item, index) => messages.push(item[0] + "\n"));
                         console.log(messages);
                         let errors = JSON.stringify(); //stringify all errors
 

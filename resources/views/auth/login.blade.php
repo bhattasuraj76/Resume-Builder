@@ -1,4 +1,4 @@
-@extends('client.layouts.master')
+@extends('front.layouts.master')
 @section('loginPage', 'active')
 @section('content')
 <div class="container mt-5">

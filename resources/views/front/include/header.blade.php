@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="{{asset('public/vendor/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/vendor/jquery-smart-wizard/css/smart_wizard_all.css')}}">
     <link rel="stylesheet" href="{{asset('public/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css')}}">
-    <link rel="stylesheet" href="{{asset('public/client/css/helper_style.css')}}">
-    <link rel="stylesheet" href="{{asset('public/client/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('public/front/css/helper_style.css')}}">
+    <link rel="stylesheet" href="{{asset('public/front/css/main.css')}}">
 
     <!-- import styles from inner pages -->
     @yield('after-styles')

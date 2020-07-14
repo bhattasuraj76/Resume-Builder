@@ -1,4 +1,4 @@
-@extends('client.layouts.master')
+@extends('front.layouts.master')
 @section('title', $pageTitle)
 @section('content')
 
@@ -13,7 +13,7 @@
         <div class="clearfix">
             <form id="template-form" class="float-left">
                 <div class="form-group text-center">
-                    <label for="template" class="col-form-label">Choose Template</label>
+                    <label for="template " class="col-form-label">Choose Template</label>
                     <select name="template" id="template">
                         <option value="">Select</option>
                         @foreach($templates as $name => $details)
@@ -28,10 +28,9 @@
                 </form>
             </div>
         </div>
-        <div class="template-preview my-5 border">
+        <div class="template-preview my-5">
             {!! $parsedView !!}
         </div>
-
     </div>
 
     @endsection
@@ -42,16 +41,24 @@
             margin: 48px 0px;
             border-color: #aaa;
         }
+
+        .template-preview {
+            border: 1px solid #ccc;
+            padding: 20px 20px;
+            border-radius: 10px;
+        }
     </style>
     @endsection
 
     @section('after-scripts')
+    <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#template').change(function() {
-                let val = $(this).val();
+                let template = $(this).val();
                 //if no template is choose empty template preview and return
-                if (!val) {
+                if (!template) {
                     $('.template-preview').html("");
                     swal({
                         icon: 'warning',
@@ -66,8 +73,6 @@
                 let formData = $('#template-form').serialize();
                 //else perform ajax to get parsed view according to template choosen
                 $.get(formUrl, formData, function(data) {
-                    if (typeof data.resp == 'undefined') return;
-
                     if (data.resp) {
                         $('.template-preview').html(data.parsedView);
                     } else {
@@ -85,11 +90,13 @@
             //handle download btn clicks
             $('.js-download-btn').on('click', function(e) {
                 e.preventDefault();
+                // createPDF();
 
                 let url = $(this).attr('href');
 
                 //inform user to login if user is not authenticated
-                let userStatus = IS_USER_AUTH;
+                let userStatus = Boolean(IS_USER_AUTH);
+                console.log(typeof userStatus, userStatus);
                 if (!userStatus) {
                     swal({
                         icon: "info",
@@ -107,6 +114,25 @@
                 $(this).get(0).click();
             });
         });
+
+        //create pdf
+        function createPDF() {
+            getCanvas().then(function(canvas) {
+                var img = canvas.toDataURL('image/png'),
+                    doc = new jsPDF();
+                doc.addImage(img, 'PNG', 5, 5);
+                doc.save('resume.pdf');
+            });
+        }
+
+        // create canvas object
+        function getCanvas() {
+            let renderedTemplate = $('.template-preview')[0];
+            return html2canvas(renderedTemplate, {
+                scale: 5,
+                dpi: 144,
+            });
+        }
     </script>
 
     @endsection

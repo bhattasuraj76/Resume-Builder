@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BasicInfo extends Model
 {
-    protected $fillable = ['user_id', 'first_name', 'last_name', 'email', 'phone', 'street', 'postal_code', 'city', 'country'];
+    protected $fillable = ['user_id', 'first_name', 'last_name', 'email', 'phone', 'postal_code', 'street', 'city', 'country', 'profession_title', 'profession_summary'];
 
     public function getNameAttribute()
     {

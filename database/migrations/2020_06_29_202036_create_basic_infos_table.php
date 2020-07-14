@@ -15,7 +15,6 @@ class CreateBasicInfosTable extends Migration
     {
         Schema::create('basic_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
@@ -27,6 +26,9 @@ class CreateBasicInfosTable extends Migration
             $table->string('postal_code')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+
+            $table->string('profession_title')->nullable();
+            $table->text('professsion_summary')->nullable();
             $table->timestamps();
         });
     }

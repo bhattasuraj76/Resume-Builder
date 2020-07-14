@@ -1,4 +1,4 @@
-@extends('client.layouts.master')
+@extends('front.layouts.master')
 @section('title', $pageTitle)
 @section('content')
 
