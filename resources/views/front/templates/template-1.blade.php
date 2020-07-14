@@ -79,7 +79,7 @@
             <div class="section-content">
                 @foreach($skills as $each)
                 @if(!empty($each['name']))
-                <p style="color: #bbb">{{$each['name'] }} - <span class="highlight">{{ ucfirst($each['level'])}}</span></p>
+                <p class="tertiary-color">{{$each['name'] }} - <span class="highlight">{{ ucfirst($each['level'])}}</span></p>
                 @endif
                 @endforeach
             </div>
@@ -90,7 +90,7 @@
             <div class="section-content">
                 @foreach($work as $each)
                 @if(!empty($each['company']))
-                <p style="color: #bbb">{{$each['company'] }} - <span class="highlight">{{$each['start_date']}} to @if(!empty($each['end_date'])) {{$each['end_date']}} @else {{"Current"}} @endif</span></p>
+                <p class="tertiary-color">{{$each['company'] }} - <span class="highlight">{{$each['start_date']}} to @if(!empty($each['end_date'])) {{$each['end_date']}} @else {{"Current"}} @endif</span></p>
                 <p><strong class="seconday-color">{{$each['position']}}</strong></p>
                 <div style="margin-left: 40px;">
                     <strong>Summary</strong>
@@ -108,7 +108,7 @@
             <div class="section-content">
                 @foreach($education as $each)
                 @if(!empty($each['institution']))
-                <p style="color: #bbb">{{$each['institution'] }} - <span class="highlight">{{$each['start_date']}} to @if(!empty($each['end_date'])) {{$each['end_date']}} @else {{"Current"}} @endif</span></p>
+                <p class="tertiary-color">{{$each['institution'] }} - <span class="highlight">{{$each['start_date']}} to @if(!empty($each['end_date'])) {{$each['end_date']}} @else {{"Current"}} @endif</span></p>
                 <p><strong class="seconday-color">{{$each['study_type']}} </strong> - <span class="highlight">{{$each['gpa']}}</span></p>
                 @endif
                 @endforeach
