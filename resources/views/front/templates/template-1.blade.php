@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume</title>
     <style>
-        * {
+        .resume-wrapper * {
             font-size: 20px;
             color: #333;
             font-family: Arial, Helvetica, sans-serif;
@@ -48,7 +48,7 @@
 </head>
 
 <body>
-    <div>
+    <div class="resume-wrapper">
         <div class="basic-info">
             <h2 class="section-title text-center">{{$data['first_name'] }} {{ $data['last_name']}}</h2>
             <div class="section-content text-center">
