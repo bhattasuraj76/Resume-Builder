@@ -25,7 +25,6 @@
         //global variables
         const BASE_URL = "{{ url('/') }}";
         const CSRF_TOKEN = $('input[name="_token"]').val();
-        const IS_USER_AUTH = "{{auth()->check() ? 1 : 0}}";
         
     </script>
 

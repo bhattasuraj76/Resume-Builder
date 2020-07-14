@@ -51,8 +51,8 @@
     @endsection
 
     @section('after-scripts')
-    <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <!-- <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script> -->
     <script>
         $(document).ready(function() {
             $('#template').change(function() {
@@ -88,15 +88,14 @@
             })
 
             //handle download btn clicks
-            $('.js-download-btn').on('click', function(e) {
-                e.preventDefault();
+            $('.js-download-btn').on('click', function(event) {
+                event.preventDefault();
                 // createPDF();
 
                 let url = $(this).attr('href');
 
                 //inform user to login if user is not authenticated
-                let userStatus = Boolean(IS_USER_AUTH);
-                console.log(typeof userStatus, userStatus);
+                let userStatus = "{{auth()->check()}}";
                 if (!userStatus) {
                     swal({
                         icon: "info",
@@ -105,7 +104,6 @@
                     }).then(function() {
                         location.href = "{{route('login')}}";
                     });
-
                     return;
                 }
 
@@ -115,24 +113,24 @@
             });
         });
 
-        //create pdf
-        function createPDF() {
-            getCanvas().then(function(canvas) {
-                var img = canvas.toDataURL('image/png'),
-                    doc = new jsPDF();
-                doc.addImage(img, 'PNG', 5, 5);
-                doc.save('resume.pdf');
-            });
-        }
+        // //create pdf
+        // function createPDF() {
+        //     getCanvas().then(function(canvas) {
+        //         var img = canvas.toDataURL('image/png'),
+        //             doc = new jsPDF();
+        //         doc.addImage(img, 'PNG', 5, 5);
+        //         doc.save('resume.pdf');
+        //     });
+        // }
 
-        // create canvas object
-        function getCanvas() {
-            let renderedTemplate = $('.template-preview')[0];
-            return html2canvas(renderedTemplate, {
-                scale: 5,
-                dpi: 144,
-            });
-        }
+        // // create canvas object
+        // function getCanvas() {
+        //     let renderedTemplate = $('.template-preview')[0];
+        //     return html2canvas(renderedTemplate, {
+        //         scale: 5,
+        //         dpi: 144,
+        //     });
+        // }
     </script>
 
     @endsection
