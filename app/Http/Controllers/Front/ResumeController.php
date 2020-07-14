@@ -213,7 +213,32 @@ class ResumeController extends Controller
     }
 
     public function downloadWord($template, $resumeDetails)
-    { }
+    {
+        //decide which view should be used to parse resume details
+        $templates = config('resume.templates');
+        $view = !empty($templates[$template]) ? $templates[$template]['view'] : null;
+
+        //get skills, experience, references , work from resume details
+        $skills = $resumeDetails['skill'];
+        $work = $resumeDetails['work'];
+        $references = $resumeDetails['reference'];
+        $education = $resumeDetails['education'];
+
+        $html = view($view, [
+            'data' => $resumeDetails,
+            'skills' => $skills,
+            'work' => $work,
+            'references' => $references,
+            'education' => $education
+        ])->render();
+
+        $headers = array(
+            "Content-type" => "text/html",
+            "Content-Disposition" => "attachment;Filename=resume.doc"
+        );
+
+        return \Response::make($html, 200, $headers);
+    }
 
     public function insertResumeDetails($resumeData, $user)
     {
