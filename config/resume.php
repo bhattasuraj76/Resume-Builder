@@ -5,7 +5,7 @@ return [
         'template-1' =>  [
             'display_name' => 'Template 1',
             'preview' => 'public/img/template-1.png',
-            'view' => 'front.templates.template-1'
+            'view' => 'front.templates.template-1',
         ],
         'template-2' => [
             'display_name' => 'Template 2',
