@@ -38,6 +38,6 @@ class SocialController extends Controller
             auth()->login($newUser, true);
         }
 
-        return redirect($this->redirectPath());
+        return redirect()->route('resume.resume_preview');
     }
 }
